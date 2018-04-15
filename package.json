@@ -4,13 +4,13 @@
   "private": true,
   "dependencies": {
     "lodash": "^4.17.4",
-    "node-sass-chokidar": "^0.0.3",
+    "node-sass-chokidar": "^1.2.2",
     "npm-run-all": "^4.1.2",
-    "p5": "^0.5.16",
+    "p5": "^0.6.0",
     "react": "^16.1.1",
     "react-dom": "^16.1.1",
-    "react-scripts": "1.0.17",
-    "serve": "6.5.4"
+    "react-scripts": "^1.1.4",
+    "serve": "^6.5.5"
   },
   "scripts": {
     "build-css": "node-sass-chokidar --include-path ./src --include-path ./node_modules src/ -o src/",
