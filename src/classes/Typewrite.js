@@ -32,6 +32,10 @@ export default class Typewrite {
     });
   }
 
+  initDone(done) {
+    this.done = done;
+  }
+
   curSplitSentences(curSplitSentencesKey) {
     if (this.userSplitSentences.length > 0) {
       this.vectorsLetter[this.curSplitSentencesKey] = this.curVectorsLetter;
@@ -59,6 +63,8 @@ export default class Typewrite {
     const lastUserSplitSentences = this.userSplitSentences[this.userSplitSentences.length - 1];
     const userSentence = lastUserSplitSentences.join('').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""); // Normalization to join string array, to cast to lower case and to delete all accentuations.
 
+    // Scene is done if it returns : 4 || 5 || 6
+
     // Not sure : return 1
     if (userSentence.includes('comongo')) { return 2; }
 
@@ -78,6 +84,14 @@ export default class Typewrite {
     return 3;
   }
 
+  willBeDone() {
+    if (this.curSplitSentencesKey == 4 || this.curSplitSentencesKey == 5 || this.curSplitSentencesKey == 6) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   deleteLastUserInput() {
     this.userSplitSentences[this.userSplitSentences.length - 1].pop();
     this.userInputVectors[this.userInputVectors.length - 1].pop();
@@ -93,24 +107,28 @@ export default class Typewrite {
         this.curVectorsLetter.push(newVectorLetter);
         this.curLetterXKey++;
       }
-      this.nextLetterTimer = p.millis() + _.random(20, 100);
+      this.nextLetterTimer = p.millis() + _.random(30, 200);
     }
     if (this.curLetterXKey == this.curSplitSentence.length - 1) {
-      if (!this.displayCursor) {
-        this.displayCursor = true;
-        const lastVectorLetter = this.curVectorsLetter[this.curVectorsLetter.length - 1];
-        this.userInputVectors.push([p.createVector(this.firstX, lastVectorLetter.y + font_size)]);
-        this.userSplitSentences.push([]);
-        this.curLine++;
-      }
-      if (this.newUserInput) {
-        this.newUserInput = false;
-        const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
-        const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-        const newPosX = (font_size - 6) + lastUserInputVectors.x;
-        const posY = lastUserInputVectors.y;
-        const newVectorLetter = p.createVector(newPosX, posY);
-        this.userInputVectors[this.userInputVectors.length - 1].push(newVectorLetter);
+      if (this.willBeDone() && !this.doneTimer) {
+        this.doneTimer = p.millis() + 3000;
+      } else {
+        if (!this.displayCursor) {
+          this.displayCursor = true;
+          const lastVectorLetter = this.curVectorsLetter[this.curVectorsLetter.length - 1];
+          this.userInputVectors.push([p.createVector(this.firstX, lastVectorLetter.y + font_size)]);
+          this.userSplitSentences.push([]);
+          this.curLine++;
+        }
+        if (this.newUserInput) {
+          this.newUserInput = false;
+          const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
+          const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
+          const newPosX = (font_size - 6) + lastUserInputVectors.x;
+          const posY = lastUserInputVectors.y;
+          const newVectorLetter = p.createVector(newPosX, posY);
+          this.userInputVectors[this.userInputVectors.length - 1].push(newVectorLetter);
+        }
       }
     }
   }
@@ -137,13 +155,20 @@ export default class Typewrite {
     });
 
     if (this.displayCursor) {
-      const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
-      const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-      let x;
-      this.newUserInput ? x = lastUserInputVectors.x + font_size : x = lastUserInputVectors.x
-      this.cursor.resetPos(lastUserInputVectors.x, lastUserInputVectors.y);
-      this.cursor.update();
-      this.cursor.display();
+      if (this.willBeDone()) {
+        // Scene is done
+        if (p.millis() > this.doneTimer) {
+          this.done();
+        }
+      } else {
+        const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
+        const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
+        let x;
+        this.newUserInput ? x = lastUserInputVectors.x + font_size : x = lastUserInputVectors.x
+        this.cursor.resetPos(lastUserInputVectors.x, lastUserInputVectors.y);
+        this.cursor.update();
+        this.cursor.display();
+      }
     }
   }
 }
