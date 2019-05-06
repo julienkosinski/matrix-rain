@@ -81,3 +81,16 @@ export class Title extends Scene {
     }
   }
 }
+
+export class Prelude extends Scene {
+  constructor(typewrite) {
+    super(typewrite);
+    this.name = 'Prelude';
+  }
+
+  draw() {
+    this.typewrite.setText('Pourquoi êtes vous ici ?');
+    p.background(0, 0, 0);
+    this.run();
+  }
+}

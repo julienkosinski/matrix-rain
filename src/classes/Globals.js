@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-let font_size = 20;
+let font_size = 15;
 const updateFontSize = size => font_size = size;
 
 let p;

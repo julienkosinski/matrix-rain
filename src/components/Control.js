@@ -14,6 +14,7 @@ const Menu = ({ onChange, checked }) => (
     <Button onClick={() => onChange("rain")} label="Rain" />
     <Button onClick={() => onChange("words")} label="Words" />
     <Button onClick={() => onChange("movie")} label="Movie" />
+    <Button onClick={() => onChange("prelude")} label="Prelude" />
     <Toggle className="toggleLink" onChange={() => onChange("bench")} checked={checked.bench} label={checked.bench ? "Stop benchmark" : "Start benchmark"} />
     <Toggle className="toggleLink" onChange={() => onChange("fullscreen")} checked={checked.fullscreen} label={checked.fullscreen ? "Exit full screen" : "Enter full screen"} />
     <Toggle className="toggleLink" onChange={() => onChange("info")} checked={checked.info} label={checked.info ? "Hide info" : "Show info"} />

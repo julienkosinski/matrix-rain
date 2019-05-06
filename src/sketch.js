@@ -44,7 +44,7 @@ export default (p) => {
   };
 
   p.windowResized = () => {
-    updateFontSize(isMobile ? 15 : 20);
+    updateFontSize(isMobile ? font_size-5 : font_size);
     p.textFont("monospace", font_size);
 
     let width, height;

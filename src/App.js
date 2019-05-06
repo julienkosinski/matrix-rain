@@ -49,7 +49,7 @@ class App extends Component {
 
   onControlChange(trigger) {
     const toggles = ['fullscreen', 'info', 'bench', 'play'];
-    const modes = ['rain', 'words', 'movie'];
+    const modes = ['rain', 'words', 'movie', 'prelude'];
     let newState;
 
     if (toggles.includes(trigger)) {

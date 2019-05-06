@@ -1,6 +1,7 @@
 import { p } from './Globals';
 import Cloud from './Cloud';
-import { Words, Rain, Title } from './Scenes';
+import Typewrite from './Typewrite';
+import { Words, Rain, Title, Prelude } from './Scenes';
 import Benchmark from './Benchmark';
 import DebugMatrix from './DebugMatrix';
 
@@ -8,6 +9,7 @@ export default class Matrix {
   constructor({ isFullscreen, bench, info, play, mode } = {}) {
     this.isFullscreen = isFullscreen;
     this.cloud = new Cloud();
+    this.typewrite = new Typewrite({ x: 40, y: 40 });
     this.changeMode(mode);
     this.sceneNum = 0;
 
@@ -39,7 +41,9 @@ export default class Matrix {
     } else if (mode === 'words') {
       this.scenes = [new Words({ cloud: this.cloud })];
     } else if (mode === 'movie') {
-      this.scenes = [(new Rain({ cloud: this.cloud, time: 300 })), new Title({ cloud: this.cloud })];
+      this.scenes = [(new Rain({ cloud: this.cloud, time: 100 })), new Title({ cloud: this.cloud })];
+    } else if (mode === 'prelude') {
+      this.scenes = [new Prelude({ typewrite: this.typewrite })];
     } else {
       this.scenes = [new Words({ cloud: this.cloud })];
     }

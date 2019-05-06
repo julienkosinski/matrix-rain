@@ -12,7 +12,7 @@ const numbers = charList(unicode0, 10);
 const katakana = charList(unicodeKa, 32);
 const SYMBOLS = ['*', '+', '<', '>', ...alphabet, ...numbers, ...katakana];
 
-class Symbol {
+export default class Symbol {
   constructor({ x, y, symbol, died }) {
     this.pos = p.createVector(x, y);
     this.color = p.color(360, 100, 100);
@@ -46,5 +46,3 @@ class Symbol {
     p.text(this.symbol, this.pos.x, this.pos.y);
   }
 }
-
-export default Symbol;
