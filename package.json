@@ -1,6 +1,9 @@
 {
   "name": "matrix-rain",
   "version": "0.1.0",
+  "engines": {
+    "node": "11.14.0"
+  },
   "private": true,
   "dependencies": {
     "lodash": "^4.17.11",
