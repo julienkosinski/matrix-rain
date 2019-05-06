@@ -78,8 +78,9 @@ export default class Typewrite {
     return 3;
   }
 
-  // TODO implement
   deleteLastUserInput() {
+    this.userSplitSentences[this.userSplitSentences.length - 1].pop();
+    this.userInputVectors[this.userInputVectors.length - 1].pop();
   }
 
   update() {
