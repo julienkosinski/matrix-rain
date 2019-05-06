@@ -90,10 +90,16 @@ export class Prelude extends Scene {
   }
 
   setup() {
-    const chatSentences = ["Pourquoi êtes vous ici ?", "Qui êtes-vous ?", "Je vous attendais ! Commençons si vous le voulez bien !", "Oh, excellent, je suis ravi de vous rencontrer ! Commençons si vous le voulez bien !"];
+    const chatSentences =
+    ["Bonjour, qui êtes-vous pour me trouver, ici, dans la matrice ? Ecrivez-moi des mots-clés simples, j'apprends encore.",
+     "Je ne suis pas bien sûr de savoir qui vous êtes. Je suis heureux de vous rencontrer. Que voulez-vous savoir ?",
+     "Oh, excellent, je vous attendais ! Je suis ravi de vous rencontrer ! Que voulez-vous savoir ?",
+     "Je ne vois pas ce que vous voulez dire (CV, motivation, salaire).",
+     "Parfait ! Commençons si vous le voulez bien !",
+     "Ma motivation est exprimée de cette façon originale. Vous n'y trouverez que peu de texte, les actes valent plus que les mots.",
+     "Mes prétentions salariales ? Alternant en professionnalisation pendant 2 ans, puis Tech Lead. 1500€/mois puis, 3000€/mois."];
     this.typewrite.chatSentences(chatSentences);
     this.typewrite.curSplitSentences(0);
-    //this.typewrite.curSplitSentences(1);
   }
 
   draw() {

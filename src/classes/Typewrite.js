@@ -5,8 +5,8 @@ import { p, font_size, _ } from './Globals';
 import Cursor from './Cursor';
 
 export default class Typewrite {
+  // TODO : Consider line overflow by breaking line.
   constructor({x, y, color}) {
-    // TODO Consider line overflow
     this.firstX = x;
     this.firstY = y;
     this.color = color || p.color(105, 100, 100);
@@ -52,13 +52,31 @@ export default class Typewrite {
     this.displayCursor = false;
 
     // TODO : Use NLP with a new class
-    //this.curSplitSentences(this.analyseUserInput());
-    this.curSplitSentences(2);
+    this.curSplitSentences(this.analyseUserInput());
   }
 
-  /*analyseUserInput() {
-    return sliptSentenceNumber;
-  }*/
+  analyseUserInput() {
+    const lastUserSplitSentences = this.userSplitSentences[this.userSplitSentences.length - 1];
+    const userSentence = lastUserSplitSentences.join('').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""); // Normalization to join string array, to cast to lower case and to delete all accentuations.
+
+    // Not sure : return 1
+    if (userSentence.includes('comongo')) { return 2; }
+
+    // Not sure : return 3
+    if (userSentence.includes('cv')) { return 4; }
+    if (userSentence.includes('resume')) { return 4; }
+    if (userSentence.includes('curriculum vitae')) { return 4; }
+
+    if (userSentence.includes('motivation')) { return 5; }
+
+    if (userSentence.includes('salaire')) { return 6; }
+    if (userSentence.includes('salariale')) { return 6; }
+    if (userSentence.includes('pretention')) { return 6; }
+
+    if (this.userSplitSentences.length == 1) { return 1; }
+
+    return 3;
+  }
 
   // TODO implement
   deleteLastUserInput() {
@@ -74,7 +92,7 @@ export default class Typewrite {
         this.curVectorsLetter.push(newVectorLetter);
         this.curLetterXKey++;
       }
-      this.nextLetterTimer = p.millis() + _.random(300, 500);
+      this.nextLetterTimer = p.millis() + _.random(20, 100);
     }
     if (this.curLetterXKey == this.curSplitSentence.length - 1) {
       if (!this.displayCursor) {
