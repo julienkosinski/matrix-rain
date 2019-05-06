@@ -83,4 +83,23 @@ export default (p) => {
       m.db.info();
     }
   };
+
+  p.keyPressed = () => {
+    if (m.typewrite.displayCursor) {
+        if (p.keyCode === p.ENTER) {
+          m.typewrite.userSendSentence();
+        }
+        if (p.keyCode === p.BACKSPACE) {
+          m.typewrite.deleteLastUserInput();
+        }
+    }
+  };
+
+  p.keyTyped = () => {
+    if (m.typewrite.displayCursor) {
+      m.typewrite.newUserInput = true;
+      m.typewrite.userSplitSentences[m.typewrite.userSplitSentences.length - 1].push(p.key);
+    }
+    return false;
+  };
 };

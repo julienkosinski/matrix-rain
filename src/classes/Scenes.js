@@ -86,10 +86,18 @@ export class Prelude extends Scene {
   constructor(typewrite) {
     super(typewrite);
     this.name = 'Prelude';
+    this.setupOnce = _.once(this.setup);
+  }
+
+  setup() {
+    const chatSentences = ["Pourquoi êtes vous ici ?", "Qui êtes-vous ?", "Je vous attendais ! Commençons si vous le voulez bien !", "Oh, excellent, je suis ravi de vous rencontrer ! Commençons si vous le voulez bien !"];
+    this.typewrite.chatSentences(chatSentences);
+    this.typewrite.curSplitSentences(0);
+    //this.typewrite.curSplitSentences(1);
   }
 
   draw() {
-    this.typewrite.setText('Pourquoi êtes vous ici ?');
+    this.setupOnce();
     p.background(0, 0, 0);
     this.run();
   }
