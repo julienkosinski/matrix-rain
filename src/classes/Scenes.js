@@ -11,7 +11,10 @@ export class Words extends Scene {
   }
 
   static get quotes() {
-    return ["What is real?", "Fear, doubt, and disbelief", "Free your mind", "Follow the white rabbit", "The Matrix Has You...", "Déjà vu", "The sound of inevitability", "Only human", "Knowing the path - Walking the path", "There is no spoon", "It will find you if you want it to", "Control", "Wake up", "Knock, knock", "The answer is out there", "Don't think you are, know you are", "You've been living in a dreamworld", "I must get out of here", "I can only show you the door. You're the one that has to walk through it", "Throughout human history, we have been dependent on machines to survive", "A world without rules and controls, without borders or boundaries", "A world where anything is possible",];
+    /*return ["What is real?", "Fear, doubt, and disbelief", "Free your mind", "Follow the white rabbit", "The Matrix Has You...", "Déjà vu", "The sound of inevitability", "Only human", "Knowing the path - Walking the path", "There is no spoon", "It will find you if you want it to", "Control", "Wake up", "Knock, knock", "The answer is out there", "Don't think you are, know you are", "You've been living in a dreamworld", "I must get out of here", "I can only show you the door. You're the one that has to walk through it", "Throughout human history, we have been dependent on machines to survive", "A world without rules and controls, without borders or boundaries", "A world where anything is possible",];*/
+    return ["HTML 5", "CSS 3", "JavaScript", "PHP", "MySQL", "PostgreSQL", "Git", "Internet of Things", "NodeJS", "Python", "Go", "Vue.js", "React",
+    "Anglais : B2", "2 ans d'alternance en développement web", "Développement entrepreneurial", "Mobilité Internationale", "Licence pro Développeur Web",
+    "Startup Weekend", "SOA", "DUT MMI"];
   }
 
   draw() {
@@ -46,7 +49,7 @@ export class Rain extends Scene {
   }
 };
 
-/* Title zooms into the center whilst showing THE MATRIX */
+/* Title zooms into the center whilst showing JULIEN KOSINSKI */
 
 export class Title extends Scene {
   constructor(cloud) {
@@ -59,7 +62,7 @@ export class Title extends Scene {
   }
 
   setup() {
-    this.cloud.setText("THE MATRIX", 300, () => this.isDone = true);
+    this.cloud.setText("JULIEN KOSINSKI", 300, () => this.isDone = true);
   }
 
   draw() {
