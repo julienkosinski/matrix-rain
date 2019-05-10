@@ -1,11 +1,10 @@
 /* Typewrite renders the Cursor to write on the first Scene questions and waits
 for UserInput answer. */
 
-import { p, font_size, _ } from './Globals';
+import { p, font_size, _, canvasWidth, canvasHeight } from './Globals';
 import Cursor from './Cursor';
 
 export default class Typewrite {
-  // TODO : Consider line overflow by breaking line.
   constructor({x, y, color}) {
     this.firstX = x;
     this.firstY = y;
@@ -25,31 +24,16 @@ export default class Typewrite {
     this.cursor = new Cursor ({ });
   }
 
-  chatSentences(sentences) {
-    if (this.curSplitSentence === []) {this.curSplitSentences(0);}
-    sentences.forEach((sentence) => {
-      this.splitSentences.push(sentence.split(''));
-    });
-  }
-
   initDone(done) {
     this.done = done;
   }
 
-  curSplitSentences(curSplitSentencesKey) {
-    if (this.userSplitSentences.length > 0) {
-      this.vectorsLetter[this.curSplitSentencesKey] = this.curVectorsLetter;
-      this.curLetterXKey = 0;
-      this.curLine++;
-      const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
-      const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-      const y = lastUserInputVectors.y + font_size;
-      this.curVectorsLetter = [p.createVector(this.firstX, y)];
+  willBeDone() {
+    if (this.curSplitSentencesKey == 4 || this.curSplitSentencesKey == 5 || this.curSplitSentencesKey == 6) {
+      return true;
     } else {
-      this.curVectorsLetter = [p.createVector(this.firstX, this.firstY)];
+      return false;
     }
-    this.curSplitSentence = this.splitSentences[curSplitSentencesKey];
-    this.curSplitSentencesKey = curSplitSentencesKey;
   }
 
   userSendSentence() {
@@ -84,12 +68,27 @@ export default class Typewrite {
     return 3;
   }
 
-  willBeDone() {
-    if (this.curSplitSentencesKey == 4 || this.curSplitSentencesKey == 5 || this.curSplitSentencesKey == 6) {
-      return true;
+  curSplitSentences(curSplitSentencesKey) {
+    if (this.userSplitSentences.length > 0) {
+      this.vectorsLetter[this.curSplitSentencesKey] = this.curVectorsLetter;
+      this.curLetterXKey = 0;
+      this.curLine++;
+      const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
+      const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
+      const y = lastUserInputVectors.y + font_size;
+      this.curVectorsLetter = [p.createVector(this.firstX, y)];
     } else {
-      return false;
+      this.curVectorsLetter = [p.createVector(this.firstX, this.firstY)];
     }
+    this.curSplitSentence = this.splitSentences[curSplitSentencesKey];
+    this.curSplitSentencesKey = curSplitSentencesKey;
+  }
+
+  chatSentences(sentences) {
+    if (this.curSplitSentence === []) {this.curSplitSentences(0);}
+    sentences.forEach((sentence) => {
+      this.splitSentences.push(sentence.split(''));
+    });
   }
 
   deleteLastUserInput() {
@@ -97,13 +96,24 @@ export default class Typewrite {
     this.userInputVectors[this.userInputVectors.length - 1].pop();
   }
 
+  calcNewXYLetter(vectorLetter) {
+    let newPosX = (font_size - 6) + vectorLetter.x;
+    let newPosY;
+    if (newPosX >= canvasWidth - this.firstX) {
+      newPosY = vectorLetter.y + font_size;
+      newPosX = this.firstX;
+    } else {
+      newPosY = vectorLetter.y;
+    }
+
+    return p.createVector(newPosX, newPosY);
+  }
+
   update() {
     if (p.millis() > this.nextLetterTimer) {
       if (this.curLetterXKey < this.curSplitSentence.length - 1 && !this.displayCursor) {
         const lastVectorLetter = this.curVectorsLetter[this.curVectorsLetter.length - 1];
-        const newPosX = (font_size - 6) + lastVectorLetter.x;
-        const posY = lastVectorLetter.y;
-        const newVectorLetter = p.createVector(newPosX, posY);
+        const newVectorLetter = this.calcNewXYLetter(lastVectorLetter);
         this.curVectorsLetter.push(newVectorLetter);
         this.curLetterXKey++;
       }
@@ -124,9 +134,7 @@ export default class Typewrite {
           this.newUserInput = false;
           const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
           const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-          const newPosX = (font_size - 6) + lastUserInputVectors.x;
-          const posY = lastUserInputVectors.y;
-          const newVectorLetter = p.createVector(newPosX, posY);
+          const newVectorLetter = this.calcNewXYLetter(lastUserInputVectors);
           this.userInputVectors[this.userInputVectors.length - 1].push(newVectorLetter);
         }
       }

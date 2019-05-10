@@ -1,4 +1,4 @@
-import { font_size, updateFontSize, setP5Instance } from './classes/Globals';
+import { font_size, updateFontSize, setP5Instance, setCanvasWidth, setCanvasHeight } from './classes/Globals';
 import Matrix from './classes/Matrix';
 
 
@@ -14,6 +14,9 @@ export default (p) => {
     p.colorMode(p.HSB, 360, 100, 100, 100);
     p.textFont("monospace", font_size);
     p.textAlign(p.LEFT, p.TOP);
+
+    setCanvasWidth(p.windowWidth);
+    setCanvasHeight(p.windowHeight);
 
     m = new Matrix(mConfig);
   };
@@ -61,6 +64,9 @@ export default (p) => {
       height = p.windowHeight;
     }
     p.resizeCanvas(width, height);
+
+    setCanvasWidth(width);
+    setCanvasHeight(height);
 
     m = new Matrix(mConfig);
   }
