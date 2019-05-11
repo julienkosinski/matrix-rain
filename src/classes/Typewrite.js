@@ -29,7 +29,7 @@ export default class Typewrite {
   }
 
   willBeDone() {
-    if (this.curSplitSentencesKey == 4 || this.curSplitSentencesKey == 5 || this.curSplitSentencesKey == 6) {
+    if (this.curSplitSentencesKey == 4) {
       return true;
     } else {
       return false;
@@ -50,21 +50,21 @@ export default class Typewrite {
     // Scene is done if it returns : 4 || 5 || 6
 
     // Not sure : return 1
-    if (userSentence.includes('comongo')) { return 2; }
+    if (this.curLine == 1 || this.curSplitSentencesKey == 1) {
+      if (userSentence.includes('comongo')) { return 2; }
+      return 1;
+    }
+
+    if (this.curSplitSentencesKey == 5) {
+      if (userSentence.includes('bleu')) { return 6; }
+      if (userSentence.includes('rouge')) { return 7; }
+      return 3;
+    }
 
     // Not sure : return 3
-    if (userSentence.includes('cv')) { return 4; }
-    if (userSentence.includes('resume')) { return 4; }
-    if (userSentence.includes('curriculum vitae')) { return 4; }
-
+    if (userSentence.includes('cv') || userSentence.includes('resume') || userSentence.includes('curriculum vitae')) { return 4; }
     if (userSentence.includes('motivation')) { return 5; }
-
-    if (userSentence.includes('salaire')) { return 6; }
-    if (userSentence.includes('salariale')) { return 6; }
-    if (userSentence.includes('pretention')) { return 6; }
-
-    if (this.userSplitSentences.length == 1) { return 1; }
-
+    if (userSentence.includes('salaire') || userSentence.includes('salariale') || userSentence.includes('pretention')) { return 8; }
     return 3;
   }
 
@@ -117,7 +117,7 @@ export default class Typewrite {
         this.curVectorsLetter.push(newVectorLetter);
         this.curLetterXKey++;
       }
-      this.nextLetterTimer = p.millis() + _.random(30, 200);
+      this.nextLetterTimer = p.millis() + _.random(20, 80);
     }
     if (this.curLetterXKey == this.curSplitSentence.length - 1) {
       if (this.willBeDone() && !this.doneTimer) {

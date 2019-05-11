@@ -24,7 +24,7 @@ export class Words extends Scene {
       const quote = _.sample(Words.quotes);
       const maxChars = p.width / font_size;
       if (quote.length < maxChars) {
-        this.cloud.setText(quote, 300, () => {
+        this.cloud.setText(quote, 30, () => {
           this.cloud.text = "";
           this.newWord = true;
         });
@@ -94,12 +94,14 @@ export class Prelude extends Scene {
 
   setup() {
     const chatSentences =
-    ["Bonjour, qui êtes-vous pour me rencontrer, ici, dans la matrice ? Ecrivez-moi des mots-clés simples, j'apprends encore.",
-     "Je ne suis pas bien sûr de savoir qui vous êtes. Je suis heureux de vous rencontrer. Que voulez-vous savoir ?",
+    ["Bonjour, pour le compte de quelle entreprise souhaiteriez-vous me rencontrer, ici, dans la matrice ? Ecrivez-moi des mots-clés simples, j'apprends encore. Attention au contexte de vos demandes !",
+     "Je ne suis pas bien sûr de savoir qui vous êtes. Je suis heureux de vous rencontrer. Cependant, j'ai besoin de vous connaître pour pouvoir commencer ce voyage !",
      "Oh, excellent, je vous attendais ! Je suis ravi de vous rencontrer ! Que voulez-vous savoir ?",
      "Je ne vois pas ce que vous voulez dire (CV, motivation, salaire).",
-     "Parfait ! Commençons si vous le voulez bien !",
-     "Ma motivation est exprimée de cette façon originale. Vous n'y trouverez que peu de texte, les actes valent plus que les mots.",
+     "Parfait ! N'hésitez pas à repartir à 0 pour tester d'autres possibilités avec la touche ECHAP. Dans cette Matrice, la touche fonctionne... Commençons si vous le voulez bien !",
+     "Je vous propose de choisir ! Choisissez la pilule bleue et tout s'arrête, après vous pourrez faire de beaux rêves et penser ce que vous voulez. Choisissez la pilule rouge, vous resterez au pays des merveilles et nous descendrons avec le lapin blanc au fond du gouffre. Que choisissez-vous ?",
+     "Vous avez choisi la pillule bleue, c'est dommage, vous vous privez d'un grand pouvoir !",
+     "Vous avez choisi la pillule rouge, vous voilà amené à passer de l'autre côté du mirroir. Pour rentrer dans le vif du sujet, votre projet est de taille et j'arrive à un instant charnière de la vie de l'entreprise. Je souhaites d'ailleurs, à terme, me placer en interface entre votre ESN et vous. Votre approche technologique consistant à collecter la donnée pertinente suscite particulièrement mon intérêt. Fort de mes 2 première années d'alternance en développement web, je suis capable de participer, voir à terme d’aider à définir la stratégie technique de l’entreprise. Je suis aussi en capacité de travailler en équipe afin de développer une efficience entrepreneuriale. Aujourd’hui, je suis à la recherche d’un partenaire d’alternance pour ma formation Tech Lead avec OpenClassrooms. J’ai eu l’occasion de maintenir et faire évoluer, en autonomie, une application en PHP sur un framework MVC dédié à une entreprise. J’ai pu administrer et gérer des requêtes sur la base de données MySQL associée à cette application. J’ai aussi eu l’occasion d’utiliser la démarche SCRUM ainsi que de développer à l'aide de nombreux autres langages et technologies.",
      "Mes prétentions salariales en brut ? Alternant en professionnalisation pendant 2 ans, puis Tech Lead. 1500€/mois puis, 3000€/mois."];
     this.typewrite.chatSentences(chatSentences);
     this.typewrite.curSplitSentences(0);

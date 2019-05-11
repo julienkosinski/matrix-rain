@@ -36,13 +36,11 @@ export default class Matrix {
   }
 
   changeMode(mode) {
-    if (mode === 'rain') {
-      this.scenes = [new Rain({ cloud: this.cloud })];
-    } else if (mode === 'words') {
+    if (mode === 'cv_no_movie') {
       this.scenes = [new Words({ cloud: this.cloud })];
-    } else if (mode === 'movie') {
-      this.scenes = [(new Rain({ cloud: this.cloud, time: 100 })), new Title({ cloud: this.cloud })];
-    } else if (mode === 'prelude') {
+    } else if (mode === 'cv_movie') {
+      this.scenes = [(new Rain({ cloud: this.cloud, time: 100 })), (new Title({ cloud: this.cloud })), new Words({ cloud: this.cloud })];
+    } else if (mode === 'complete') {
       this.scenes = [(new Prelude({ typewrite: this.typewrite })), (new Rain({ cloud: this.cloud, time: 100 })), (new Title({ cloud: this.cloud })), new Words({ cloud: this.cloud })];
     } else {
       this.scenes = [(new Prelude({ typewrite: this.typewrite })), (new Rain({ cloud: this.cloud, time: 100 })), (new Title({ cloud: this.cloud })), new Words({ cloud: this.cloud })];

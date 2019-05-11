@@ -24,7 +24,7 @@ const Table = ({ data, cols }) => (
 
 const BenchmarkInfo = ({ state, frames, data, cols }) => {
   if (state === 'RUNNING') {
-    return <span>Benchmark results in {frames}</span>;
+    return <span>Résultat du test dans {frames}</span>;
   } else if (state === 'DONE') {
     return <Table data={data} cols={cols} />;
   }

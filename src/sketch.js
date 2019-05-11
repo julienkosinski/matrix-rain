@@ -99,6 +99,9 @@ export default (p) => {
           m.typewrite.deleteLastUserInput();
         }
     }
+    if (p.keyCode === p.ESCAPE) {
+      m = new Matrix(mConfig);
+    }
   };
 
   p.keyTyped = () => {

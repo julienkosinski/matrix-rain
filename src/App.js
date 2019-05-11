@@ -5,7 +5,7 @@ import ControlContainer from './components/ControlContainer';
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { fullscreen: false, bench: false, play: true, info: true };
+    this.state = { fullscreen: false, bench: false, play: true, info: false };
 
     this.onNewStats = this.onNewStats.bind(this);
     this.onControlChange = this.onControlChange.bind(this);
@@ -26,10 +26,10 @@ class App extends Component {
     const stats = {
       basic: {
         data: [
-          { name: 'Scene', value: sceneName },
+          { name: 'Scène', value: sceneName },
           { name: 'FPS', value: fps },
-          { name: 'Frame count', value: frameCount },
-          { name: 'Raindrops', value: raindropCount },
+          { name: 'Nombre d\'images', value: frameCount },
+          { name: 'Gouttes', value: raindropCount },
         ],
       },
       bench: {
@@ -37,7 +37,7 @@ class App extends Component {
         frames,
         cols: [
           { key: 'test', label: '' },
-          { key: 'average', label: 'Average' },
+          { key: 'average', label: 'Moyenne' },
           { key: 'min', label: 'Min' },
           { key: 'max', label: 'Max' },
         ],
@@ -49,7 +49,7 @@ class App extends Component {
 
   onControlChange(trigger) {
     const toggles = ['fullscreen', 'info', 'bench', 'play'];
-    const modes = ['rain', 'words', 'movie', 'prelude'];
+    const modes = ['cv_no_movie', 'cv_movie', 'complete'];
     let newState;
 
     if (toggles.includes(trigger)) {
