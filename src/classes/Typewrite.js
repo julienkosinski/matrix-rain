@@ -75,7 +75,7 @@ export default class Typewrite {
       this.curLine++;
       const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
       const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-      const y = lastUserInputVectors.y + font_size;
+      const y = lastUserInputVectors.y + 2 * font_size;
       this.curVectorsLetter = [p.createVector(this.firstX, y)];
     } else {
       this.curVectorsLetter = [p.createVector(this.firstX, this.firstY)];
@@ -158,6 +158,7 @@ export default class Typewrite {
 
     this.userInputVectors.forEach((userInputVectorForASentence, userSplitSentencesKey) => {
       userInputVectorForASentence.forEach((userInputVector, i) => {
+        p.fill('white');
         p.text(this.userSplitSentences[userSplitSentencesKey][i], userInputVector.x, userInputVector.y);
       });
     });
