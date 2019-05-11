@@ -92,8 +92,10 @@ export default class Typewrite {
   }
 
   deleteLastUserInput() {
-    this.userSplitSentences[this.userSplitSentences.length - 1].pop();
-    this.userInputVectors[this.userInputVectors.length - 1].pop();
+    if (this.userInputVectors[this.userInputVectors.length - 1].length !== 1) {
+      this.userSplitSentences[this.userSplitSentences.length - 1].pop();
+      this.userInputVectors[this.userInputVectors.length - 1].pop();
+    }
   }
 
   calcNewXYLetter(vectorLetter) {
