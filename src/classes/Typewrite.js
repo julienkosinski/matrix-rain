@@ -9,7 +9,7 @@ export default class Typewrite {
     this.firstX = x;
     this.firstY = y;
     this.color = color || p.color(105, 100, 100);
-    this.nextLetterTimer = p.millis() + _.random(400, 500);
+    this.nextLetterTimer = p.millis() + _.random(20, 80);
     this.displayCursor = false;
     this.newUserInput = false;
     this.vectorsLetter = [];
@@ -29,7 +29,7 @@ export default class Typewrite {
   }
 
   willBeDone() {
-    if (this.curSplitSentencesKey == 4) {
+    if (this.curSplitSentencesKey === 4) {
       return true;
     } else {
       return false;
@@ -47,15 +47,13 @@ export default class Typewrite {
     const lastUserSplitSentences = this.userSplitSentences[this.userSplitSentences.length - 1];
     const userSentence = lastUserSplitSentences.join('').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ""); // Normalization to join string array, to cast to lower case and to delete all accentuations.
 
-    // Scene is done if it returns : 4 || 5 || 6
-
     // Not sure : return 1
-    if (this.curLine == 1 || this.curSplitSentencesKey == 1) {
+    if (this.curLine === 1 || this.curSplitSentencesKey === 1) {
       if (userSentence.includes('comongo')) { return 2; }
       return 1;
     }
 
-    if (this.curSplitSentencesKey == 5) {
+    if (this.curSplitSentencesKey === 5) {
       if (userSentence.includes('bleu')) { return 6; }
       if (userSentence.includes('rouge')) { return 7; }
       return 3;
@@ -121,7 +119,7 @@ export default class Typewrite {
       }
       this.nextLetterTimer = p.millis() + _.random(20, 80);
     }
-    if (this.curLetterXKey == this.curSplitSentence.length - 1) {
+    if (this.curLetterXKey === this.curSplitSentence.length - 1) {
       if (this.willBeDone() && !this.doneTimer) {
         this.doneTimer = p.millis() + 3000;
       } else {
@@ -174,8 +172,6 @@ export default class Typewrite {
       } else {
         const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
         const lastUserInputVectors = lastUserInputVectorsLine[lastUserInputVectorsLine.length - 1];
-        let x;
-        this.newUserInput ? x = lastUserInputVectors.x + font_size : x = lastUserInputVectors.x
         this.cursor.resetPos(lastUserInputVectors.x, lastUserInputVectors.y);
         this.cursor.update();
         this.cursor.display();
