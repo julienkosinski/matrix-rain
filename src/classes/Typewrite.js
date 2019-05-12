@@ -68,7 +68,8 @@ export default class Typewrite {
 
   curSplitSentences(curSplitSentencesKey) {
     if (this.userSplitSentences.length > 0) {
-      this.vectorsLetter[this.curSplitSentencesKey] = this.curVectorsLetter;
+      if(!this.vectorsLetter[this.curSplitSentencesKey]) { this.vectorsLetter[this.curSplitSentencesKey] = []; }
+      this.vectorsLetter[this.curSplitSentencesKey].push(this.curVectorsLetter);
       this.curLetterXKey = 0;
       this.curLine++;
       const lastUserInputVectorsLine = this.userInputVectors[this.userInputVectors.length - 1];
@@ -97,6 +98,7 @@ export default class Typewrite {
   }
 
   calcNewXYLetter(vectorLetter) {
+    // Breaks line if data overflows on the right
     let newPosX = (font_size - 6) + vectorLetter.x;
     let newPosY;
     if (newPosX >= canvasWidth - this.firstX) {
@@ -146,9 +148,12 @@ export default class Typewrite {
     p.fill(this.color);
 
     // Display existing lines
-    this.vectorsLetter.forEach((vectorLetterForASentence, splitSentencesKey) => {
-      vectorLetterForASentence.forEach((vectorLetter, i) => {
-        p.text(this.splitSentences[splitSentencesKey][i], vectorLetter.x, vectorLetter.y);
+    // TODO : Fix bug, if splitSentencesKey has to be displayed multiple times,vectorLetter gonna be replaced with latest
+    this.vectorsLetter.forEach((vectorLetterForASentenceList, splitSentencesKey) => {
+      vectorLetterForASentenceList.forEach((vectorLetterForASentence) => {
+        vectorLetterForASentence.forEach((vectorLetter, i) => {
+          p.text(this.splitSentences[splitSentencesKey][i], vectorLetter.x, vectorLetter.y);
+        });
       });
     });
 
