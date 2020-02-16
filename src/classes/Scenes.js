@@ -94,7 +94,7 @@ export class Prelude extends Scene {
 
     setup() {
         const chatSentences =
-            ["Bonjour, pour le compte de quelle entreprise souhaiteriez-vous me rencontrer, ici, dans la matrice ? Écrivez-moi des mots-clés simples, j'apprends encore. Attention au contexte de vos demandes ! (Références au film Matrix)",
+            ["Bonjour, je suis actuellement en poste, en alternance, pour sortir de la matrice, chez Comongo ! Comme un souvenir, vous pouvez encore me consulter ! Écrivez-moi des mots-clés simples, j'apprends encore. Attention au contexte de vos demandes ! (Références au film Matrix)",
                 "Je ne suis pas bien sûr de savoir qui vous êtes. Je suis heureux de vous rencontrer. Cependant, j'ai besoin de vous connaître pour pouvoir commencer ce voyage !",
                 "Oh, excellent, je vous attendais ! Je suis ravi de vous rencontrer ! Que voulez-vous savoir ?",
                 "Je ne vois pas ce que vous voulez dire (CV, motivation, salaire).",
