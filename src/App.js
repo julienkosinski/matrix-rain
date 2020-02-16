@@ -1,76 +1,77 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Info from './components/Info';
 import ControlContainer from './components/ControlContainer';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { fullscreen: false, bench: false, play: true, info: false };
+    constructor(props) {
+        super(props);
+        this.state = {fullscreen: false, bench: false, play: true, info: false};
 
-    this.onNewStats = this.onNewStats.bind(this);
-    this.onControlChange = this.onControlChange.bind(this);
-  }
-
-  onNewStats(info) {
-    const { sceneName, fps, frameCount, raindropCount } = info;
-    const { state, frames } = info.bench;
-
-    const benchData = [];
-    for (let test in info.bench.stats) {
-      const { average, min, max } = info.bench.stats[test];
-      if (info.bench.stats.hasOwnProperty(test)) {
-        benchData.push({ test, average, min, max });
-      }
+        this.onNewStats = this.onNewStats.bind(this);
+        this.onControlChange = this.onControlChange.bind(this);
     }
 
-    const stats = {
-      basic: {
-        data: [
-          { name: 'Scène', value: sceneName },
-          { name: 'FPS', value: fps },
-          { name: 'Nombre d\'images', value: frameCount },
-          { name: 'Gouttes', value: raindropCount },
-        ],
-      },
-      bench: {
-        state,
-        frames,
-        cols: [
-          { key: 'test', label: '' },
-          { key: 'average', label: 'Moyenne' },
-          { key: 'min', label: 'Min' },
-          { key: 'max', label: 'Max' },
-        ],
-        data: benchData,
-      },
-    };
-    this.setState({ stats });
-  }
+    onNewStats(info) {
+        const {sceneName, fps, frameCount, raindropCount} = info;
+        const {state, frames} = info.bench;
 
-  onControlChange(trigger) {
-    const toggles = ['fullscreen', 'info', 'bench', 'play'];
-    const modes = ['cv_no_movie', 'cv_movie', 'complete'];
-    let newState;
+        const benchData = [];
+        for (let test in info.bench.stats) {
+            const {average, min, max} = info.bench.stats[test];
+            if (info.bench.stats.hasOwnProperty(test)) {
+                benchData.push({test, average, min, max});
+            }
+        }
 
-    if (toggles.includes(trigger)) {
-      newState = { [trigger]: !this.state[trigger] };
-    } else if (modes.includes(trigger)) {
-      newState = { mode: trigger };
+        const stats = {
+            basic: {
+                data: [
+                    {name: 'Scène', value: sceneName},
+                    {name: 'FPS', value: fps},
+                    {name: 'Nombre d\'images', value: frameCount},
+                    {name: 'Gouttes', value: raindropCount},
+                ],
+            },
+            bench: {
+                state,
+                frames,
+                cols: [
+                    {key: 'test', label: ''},
+                    {key: 'average', label: 'Moyenne'},
+                    {key: 'min', label: 'Min'},
+                    {key: 'max', label: 'Max'},
+                ],
+                data: benchData,
+            },
+        };
+        this.setState({stats});
     }
 
-    this.setState({ ...newState, controlSketch: newState });
-  }
+    onControlChange(trigger) {
+        const toggles = ['fullscreen', 'info', 'bench', 'play'];
+        const modes = ['cv_no_movie', 'cv_movie', 'complete'];
+        let newState;
 
-  render() {
-    const { fullscreen, bench, play, info, stats, mode, controlSketch } = this.state;
-    const controls = { fullscreen, bench, play, info, mode };
+        if (toggles.includes(trigger)) {
+            newState = {[trigger]: !this.state[trigger]};
+        } else if (modes.includes(trigger)) {
+            newState = {mode: trigger};
+        }
 
-    return (
-      <div>
-        <ControlContainer onNewStats={this.onNewStats} onControlChange={this.onControlChange} {...controls} controlSketch={controlSketch} />
-        {info && stats && <Info stats={stats} />}
-      </div>)
-  }
+        this.setState({...newState, controlSketch: newState});
+    }
+
+    render() {
+        const {fullscreen, bench, play, info, stats, mode, controlSketch} = this.state;
+        const controls = {fullscreen, bench, play, info, mode};
+
+        return (
+            <div>
+                <ControlContainer onNewStats={this.onNewStats} onControlChange={this.onControlChange} {...controls}
+                                  controlSketch={controlSketch}/>
+                {info && stats && <Info stats={stats}/>}
+            </div>)
+    }
 
 };
 

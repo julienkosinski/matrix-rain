@@ -13,4 +13,15 @@ const setCanvasWidth = canvasWidthValue => canvasWidth = canvasWidthValue;
 let canvasHeight;
 const setCanvasHeight = canvasHeightValue => canvasHeight = canvasHeightValue;
 
-export { p, _, font_size, updateFontSize, setP5Instance, max_active_raindrops, canvasWidth, canvasHeight, setCanvasWidth, setCanvasHeight };
+export {
+    p,
+    _,
+    font_size,
+    updateFontSize,
+    setP5Instance,
+    max_active_raindrops,
+    canvasWidth,
+    canvasHeight,
+    setCanvasWidth,
+    setCanvasHeight
+};

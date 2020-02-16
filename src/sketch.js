@@ -1,114 +1,114 @@
-import { font_size, updateFontSize, setP5Instance, setCanvasWidth, setCanvasHeight } from './classes/Globals';
+import {font_size, setCanvasHeight, setCanvasWidth, setP5Instance, updateFontSize} from './classes/Globals';
 import Matrix from './classes/Matrix';
 
 
 export default (p) => {
-  const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-  let m, mConfig;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    let m, mConfig;
 
-  p.setup = () => {
-    setP5Instance(p);
-    // p.frameRate(10);
-    const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
-    canvas.id("mycanvas");
-    p.colorMode(p.HSB, 360, 100, 100, 100);
-    p.textFont("monospace", font_size);
-    p.textAlign(p.LEFT, p.TOP);
+    p.setup = () => {
+        setP5Instance(p);
+        // p.frameRate(10);
+        const canvas = p.createCanvas(p.windowWidth, p.windowHeight);
+        canvas.id("mycanvas");
+        p.colorMode(p.HSB, 360, 100, 100, 100);
+        p.textFont("monospace", font_size);
+        p.textAlign(p.LEFT, p.TOP);
 
-    setCanvasWidth(p.windowWidth);
-    setCanvasHeight(p.windowHeight);
+        setCanvasWidth(p.windowWidth);
+        setCanvasHeight(p.windowHeight);
 
-    m = new Matrix(mConfig);
-  };
+        m = new Matrix(mConfig);
+    };
 
-  p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
-    p.reactProps = props;
-    const trigger = props.controlSketch;
-    mConfig = props.controlConfig;
+    p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
+        p.reactProps = props;
+        const trigger = props.controlSketch;
+        mConfig = props.controlConfig;
 
-    if (m) {
-      if ('fullscreen' in trigger) {
-        m.isFullscreen = trigger.fullscreen;
-      } else if ('info' in trigger) {
-        m.db.isEnabled = trigger.info;
-      } else if ('play' in trigger) {
-        m.isAnimating = trigger.play;
-        m.animating ? p.loop() : p.noLoop();
-      } else if ('bench' in trigger) {
-        m.bench.isRunning = trigger.bench;
+        if (m) {
+            if ('fullscreen' in trigger) {
+                m.isFullscreen = trigger.fullscreen;
+            } else if ('info' in trigger) {
+                m.db.isEnabled = trigger.info;
+            } else if ('play' in trigger) {
+                m.isAnimating = trigger.play;
+                m.animating ? p.loop() : p.noLoop();
+            } else if ('bench' in trigger) {
+                m.bench.isRunning = trigger.bench;
 
-        if (trigger.bench === false) {
-          m.bench.reset();
+                if (trigger.bench === false) {
+                    m.bench.reset();
+                }
+            } else if ('mode' in trigger) {
+                m = new Matrix({...mConfig, mode: trigger.mode});
+            }
         }
-      } else if ('mode' in trigger) {
-        m = new Matrix({ ...mConfig, mode: trigger.mode });
-      }
-    }
-  };
+    };
 
-  p.windowResized = () => {
-    updateFontSize(isMobile ? font_size-5 : font_size);
-    p.textFont("monospace", font_size);
+    p.windowResized = () => {
+        updateFontSize(isMobile ? font_size - 5 : font_size);
+        p.textFont("monospace", font_size);
 
-    let width, height;
-    if (m.isFullscreen) {
-      if (isMobile && window.matchMedia("(orientation: landscape)").matches) {
-        width = p.displayHeight;
-        height = p.displayWidth;
-      } else {
-        width = p.displayWidth;
-        height = p.displayHeight;
-      }
-    } else {
-      width = p.windowWidth;
-      height = p.windowHeight;
-    }
-    p.resizeCanvas(width, height);
-
-    setCanvasWidth(width);
-    setCanvasHeight(height);
-
-    m = new Matrix(mConfig);
-  }
-
-  p.draw = () => {
-    const scene = m.scenes[m.sceneNum];
-    if (scene) {
-      scene.draw();
-      if (scene.isDone) {
-        m.sceneNum++;
-      }
-    } else {
-      p.background(0);
-    }
-
-    if (m.db.isEnabled) {
-      if (m.bench.isRunning) {
-        m.bench.run();
-      }
-      m.db.info();
-    }
-  };
-
-  p.keyPressed = () => {
-    if (m.typewrite.displayCursor) {
-        if (p.keyCode === p.ENTER) {
-          m.typewrite.userSendSentence();
+        let width, height;
+        if (m.isFullscreen) {
+            if (isMobile && window.matchMedia("(orientation: landscape)").matches) {
+                width = p.displayHeight;
+                height = p.displayWidth;
+            } else {
+                width = p.displayWidth;
+                height = p.displayHeight;
+            }
+        } else {
+            width = p.windowWidth;
+            height = p.windowHeight;
         }
-        if (p.keyCode === p.BACKSPACE) {
-          m.typewrite.deleteLastUserInput();
-        }
-    }
-    if (p.keyCode === p.ESCAPE) {
-      m = new Matrix(mConfig);
-    }
-  };
+        p.resizeCanvas(width, height);
 
-  p.keyTyped = () => {
-    if (m.typewrite.displayCursor) {
-      m.typewrite.newUserInput = true;
-      m.typewrite.userSplitSentences[m.typewrite.userSplitSentences.length - 1].push(p.key);
+        setCanvasWidth(width);
+        setCanvasHeight(height);
+
+        m = new Matrix(mConfig);
     }
-    return false;
-  };
+
+    p.draw = () => {
+        const scene = m.scenes[m.sceneNum];
+        if (scene) {
+            scene.draw();
+            if (scene.isDone) {
+                m.sceneNum++;
+            }
+        } else {
+            p.background(0);
+        }
+
+        if (m.db.isEnabled) {
+            if (m.bench.isRunning) {
+                m.bench.run();
+            }
+            m.db.info();
+        }
+    };
+
+    p.keyPressed = () => {
+        if (m.typewrite.displayCursor) {
+            if (p.keyCode === p.ENTER) {
+                m.typewrite.userSendSentence();
+            }
+            if (p.keyCode === p.BACKSPACE) {
+                m.typewrite.deleteLastUserInput();
+            }
+        }
+        if (p.keyCode === p.ESCAPE) {
+            m = new Matrix(mConfig);
+        }
+    };
+
+    p.keyTyped = () => {
+        if (m.typewrite.displayCursor) {
+            m.typewrite.newUserInput = true;
+            m.typewrite.userSplitSentences[m.typewrite.userSplitSentences.length - 1].push(p.key);
+        }
+        return false;
+    };
 };
